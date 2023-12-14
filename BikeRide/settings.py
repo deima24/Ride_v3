@@ -30,6 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['8000-deima24-ride-v3-9qnyszvbs3.us2.codeanyapp.com', 'bike-ride-v3-8047d341dc9a.herokuapp.com']
+CSRF_TRUSTED_ORIGINS=['https://*.8000-deima24-ride-v3-9qnyszvbs3.us2.codeanyapp.com']
 
 
 # Application definition
@@ -44,8 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "cloudinary",
     "Ride",
-    
-
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
