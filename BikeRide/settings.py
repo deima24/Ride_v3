@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-deima24-ride-v3-9qnyszvbs3.us2.codeanyapp.com', 'bike-ride-v3.herokuapp.com']
+ALLOWED_HOSTS = ['8000-deima24-ride-v3-9qnyszvbs3.us2.codeanyapp.com', 'bike-ride-v3-8047d341dc9a.herokuapp.com']
 
 
 # Application definition
