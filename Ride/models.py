@@ -7,6 +7,8 @@ from cloudinary.models import CloudinaryField
 
 STATUS = ((0, "Draft"), (1, "Published"))
 
+diff = [("Moderate", "Moderate"), ("Hard", "Hard"), ("Easy", "Easy")]
+
 class Entry(models.Model):
     """
     Storing Entry data
