@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+
+<div class="row col-md-8 offset-md-2 delete-idea white">
+    <div class="col-md-8 offset-md-2 p-3">
+        <!-- Delete idea headig -->
+        <div class="post_delete">
+            <h1 class="text-center">Delete Post</h1>
+            <div class="d-flex justify-content-center pt-3">
+                <!-- Delete idea confirmation form-->
+                <form method="post" class="text-center p-5">
+                    {% csrf_token %}
+                    <p>Are you sure you want to delete "{{ entry.title }}"?</p>
+                    <input type="submit" value="Confirm" class="button">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

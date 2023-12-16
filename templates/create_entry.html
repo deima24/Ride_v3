@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<div class="container">
+    <div class="create_post_form white">
+        <!-- Create form header and information -->
+        <h1>Share your Post</h1>
+        <p>Do you have your own fantasic Rides to share?</p>
+        <p>Complete the form below and let others know what it is!</p>
+        <!-- Create idea form -->
+        <form  method="POST" enctype="multipart/form-data">
+            
+            {% csrf_token %}
+
+            {{form | crispy}}
+        
+
+            <button class="button create_btn btn-lg" type="submit">Submit</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

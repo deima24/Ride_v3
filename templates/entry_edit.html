@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="edit_post_form white">
+        <!-- Edit post form heading and information -->
+        <h1>Edit your Post</h1>
+        <p>If you have any updates to your existing post please update it here:</p>
+        <!-- Edit post form-->
+        <form  action="{% url 'entry_edit' entry.id %}" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{ form.id }}
+            {{ form|crispy }}
+            {{ form.media }}
+
+            <input class="button edit-btn" type="submit" value="Submit">
+        </form>
+    </div>
+
+</div>
+{% endblock %}

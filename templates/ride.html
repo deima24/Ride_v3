@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Blog Entries Column -->
+      <div class="col-md-12 mt-3 left">
+        <div class="row">
+
+          {% for entry in entry_list %}
+          
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <div class="card-body">
+                <!-- post image -->
+                <img class="card-img-top" src=" {{ entry.featured_image.url }}" alt="">
+                <a href="{% url 'entry_detail' entry.slug  %}">
+                  <!-- post title -->
+                  <h2 class="card-title posttitle">{{ entry.title }}</h2>
+                </a>
+                <!-- post author and when it was posted -->
+                <p class="card-text text-muted h6">{{ entry.author }} | {{ entry.created_on}} </p>
+                <!-- difficulty of ride -->
+                <P class="card-text">Difficulty: {{ entry.difficulty }}</P>
+                <!-- distance of the ride -->
+                <P class="card-text">Distance: {{ entry.distance }} KM</P>
+                <!-- beggining of the post so reader can read some text before enterint the post -->
+                <p class="card-text">{{ entry.content|slice:":100" }}</p>
+                
+                
+              </div>
+            </div>
+          </div>
+          <!-- creates 3 post per line -->
+          {% if forloop.counter|divisibleby:3 %}
+
+        </div>
+        <div class="row">
+
+          {% endif %}
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+    <!-- creates next button if there is more then 6 post per page -->
+    {% if is_paginated %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link button-more">&laquo; PREV </a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link button-more"> NEXT &raquo;</a></li>
+
+            {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
+  </div>
+
+{% endblock %}

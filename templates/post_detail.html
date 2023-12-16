@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="masthead">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-md-12 post-text">
+                <!-- Post title goes in these h1 tags -->
+                <h1 class="post-title white">{{ entry.title }}</h1>
+            </div>
+            <!-- Delete Post -->
+            {% if entry.author == request.user%}
+            <div class="row-md-3">
+                <div class="col-md-3 float-right ">
+                    <span>
+                        <a href="{% url 'delete_entry' entry.pk %}" class="delete large-icon"
+                            aria-label="Click to delete post">
+                            <i class="far fa-trash-alt fa-2x"></i>
+                        </a>
+                    </span>
+                    <!-- Edit Post -->
+                    <span>
+                        <a href="{% url 'entry_edit' entry.pk %}" class="edit large-icon" aria-label="Click to edit post">
+                            <i class="far fa-edit fa-2x"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="d-md-block col-md-12 offset-md-2 post-image">
+            <!-- The featured image URL goes in the src attribute image is shown between the title of the post and the author-->
+            {% if "placeholder" in post.featured_image.url %}
+            <img class="post-img" src="https://res.cloudinary.com/dmecv9zwa/image/upload/v1680130673/x6ayc6fvpikajmenqnyv.jpg" alt="post-img">
+            {% else %}
+            <img class="post-img" src=" {{ entry.featured_image.url }}" alt="post-img">
+            {% endif %}
+        </div>
+            
+        <div class="post-text">
+            <!-- Post author goes after the post image -->
+            <h5 class="post-subtitle white">{{ entry.author }} | {{ entry.created_on }}</h5>
+        </div>
+             
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col card mb-4  mt-3 left  top post-body">
+            <div>
+                <!-- post content goes after the author-->
+                <p class="card-text">
+                    {{ entry.content | safe }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col card">
+            
+            <p>
+                <b>START:</b> 
+                {{ entry.start }}
+            </p>
+            
+            <p>
+                <b>FINISH:</b>
+                {{ entry.finish }}
+            </p>
+            
+            <p>
+                <b>DISTANCE:</b> 
+                {{ entry.distance }}
+                KM.
+            </p>
+            <p>
+                <b>DIFFICULTY:</b> 
+                {{ entry.difficulty }}
+            </p>
+            <p>
+                <b>AVERAGE:</b> 
+                {{ entry.average_rating|floatformat:1 }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 card mb-4  mt-3 post-body">
+            <h3>Comments:</h3>
+            <div class="card-body">
+                <!-- We want a for loop inside the empty control tags to iterate through each comment in comments -->
+                {% for comment in comments %}
+                <div class="comments" style="padding: 10px;">
+                    <p class="font-weight-bold">
+                        <!-- The commenter's name goes here. -->
+                        {{ comment.name }}
+                        <span class=" text-muted font-weight-normal">
+                            <!-- The comment's created date goes here -->
+                            {{ comment.created_on }}
+                        </span>
+                    </p>
+                    <!-- The body of the comment goes before the | -->
+                    {{ comment.body | linebreaks }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-12 card mb-4  mt-3 post-body leave-coment">
+            <div class="card-body">
+                <!-- gives you an elert that the post is waiting for to de approved  -->
+                {% if commented %}
+                <div class="alert alert-success" role="alert">
+                    Your comment is posted
+                </div>
+                {% else %}
+                
+                <!-- Check if the user is logged in-->
+                {% if user.is_authenticated %}
+                <h3>Leave a comment:</h3>
+                <!-- commenter username-->
+                <p class="card-text">Logged as: {{ user.username }}</p>
+                <!-- Comment form -->
+                <form method="post" style="margin-top: 1.3em;">
+                    <p>Please rate our {{entry.title}} Bike Ride:</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating" id="one" value="1">
+                        <label class="form-check-label" for="one">
+                            <i class="fa-solid fa-star"></i>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating" id="two" value="2">
+                        <label class="form-check-label" for="two">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating" id="three" value="3">
+                        <label class="form-check-label" for="three">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating" id="four" value="4">
+                        <label class="form-check-label" for="four">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="rating" id="five" value="5">
+                        <label class="form-check-label" for="five">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </label>
+                    </div>
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn button btn-signup btn-lg post_btn">Submit</button>
+                </form>
+                {% endif %}
+                {% endif %}
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

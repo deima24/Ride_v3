@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
-
-# Create your models here.
-
+from django.db.models import Avg
 
 STATUS = ((0, "Draft"), (1, "Published"))
 
 diff = [("Moderate", "Moderate"), ("Hard", "Hard"), ("Easy", "Easy")]
+
 
 class Entry(models.Model):
     """
@@ -43,6 +42,7 @@ class Entry(models.Model):
     def __str__(self):
         return f"{self.title}: {self.average_rating()}"
 
+
 class Comment(models.Model):
     """
     Storing the Comment data
@@ -61,3 +61,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.body} by {self.name}"
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.entry.title}: {self.rating}"
